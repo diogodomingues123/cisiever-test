@@ -1,0 +1,65 @@
+name: Pull Request Pipeline
+on:
+  pull_request: 
+    branches:
+      - main
+    
+env:
+  dotnet-version: 7.0.x
+jobs:
+  build:
+    name: Build Project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup .NET Core SDK ${{ env.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.dotnet-version }}
+          
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/Directory.Build.props', '**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
+            
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+        
+      - name: Restore Dependencies
+        run: dotnet restore
+        
+      - name: Install SonarQube scanner
+        run: dotnet tool install --global dotnet-sonarscanner
+        
+      - name: Build & Analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: | 
+          dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage" --settings tests/tests.runsettings
+        
+      - name: Test Report
+        uses: dorny/test-reporter@v1.6.0
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        with:
+          name: Test Results
+          path: TestResults/*.trx
+          reporter: dotnet-trx
+        
+      - name: Check Style
+        run: |
+          dotnet format style --verify-no-changes 
+          dotnet format analyzers --verify-no-changes

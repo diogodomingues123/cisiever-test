@@ -1,0 +1,101 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeArePlanet.SPV.Reports.Web", "src\WeArePlanet.SPV.Reports.Web\WeArePlanet.SPV.Reports.Web.csproj", "{AF366790-E786-409B-8FC1-F1AB95BACCE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Web", "1 - Web", "{CA49944D-88D9-4274-8364-68652A239982}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{8A0DB0A0-8FF2-4963-8DB3-EB3B6CD759F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Persistence", "3 - Persistence", "{99B5D35A-CD02-4C2F-92DC-1367AD80DCDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeArePlanet.SPV.Reports.Domain", "src\WeArePlanet.SPV.Reports.Domain\WeArePlanet.SPV.Reports.Domain.csproj", "{807F3BE2-E172-4171-8755-3D586BF5D342}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeArePlanet.SPV.Reports.Persistence", "src\WeArePlanet.SPV.Reports.Persistence\WeArePlanet.SPV.Reports.Persistence.csproj", "{E9CFCF93-10BE-4C39-95F0-7FBCE1F62125}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{835D4700-DB98-4AD0-8135-29986E079275}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		README.md = README.md
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeArePlanet.SPV.Reports.Web.Tests", "tests\WeArePlanet.SPV.Reports.Web.Tests\WeArePlanet.SPV.Reports.Web.Tests.csproj", "{58202E7A-20F8-496D-BAAA-C195FBA6905F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Common", "4 - Common", "{17DA61CC-BF04-4B9A-8746-48DB7C940386}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeArePlanet.SPV.Reports.Common.Tests", "tests\WeArePlanet.SPV.Reports.Common.Tests\WeArePlanet.SPV.Reports.Common.Tests.csproj", "{F2264DE8-AA9C-4FF4-875D-A73818A25623}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeArePlanet.SPV.Reports.Domain.Tests", "tests\WeArePlanet.SPV.Reports.Domain.Tests\WeArePlanet.SPV.Reports.Domain.Tests.csproj", "{18E8CC80-C707-4ED1-B5E0-51829831BD8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeArePlanet.SPV.Reports.TestFactories", "tests\WeArePlanet.SPV.Reports.TestFactories\WeArePlanet.SPV.Reports.TestFactories.csproj", "{392588CF-36F5-4BE1-9FD0-354A58DB7D73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeArePlanet.SPV.Reports.Persistence.Tests", "tests\WeArePlanet.SPV.Reports.Persistence.Tests\WeArePlanet.SPV.Reports.Persistence.Tests.csproj", "{7296461E-5520-479F-949C-E1CE5DF38082}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeArePlanet.SPV.Reports.Common", "src\WeArePlanet.SPV.Reports.Common\WeArePlanet.SPV.Reports.Common.csproj", "{BF59061C-B1FF-4A26-A093-139E4A38DC20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF366790-E786-409B-8FC1-F1AB95BACCE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF366790-E786-409B-8FC1-F1AB95BACCE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF366790-E786-409B-8FC1-F1AB95BACCE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF366790-E786-409B-8FC1-F1AB95BACCE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{807F3BE2-E172-4171-8755-3D586BF5D342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{807F3BE2-E172-4171-8755-3D586BF5D342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{807F3BE2-E172-4171-8755-3D586BF5D342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{807F3BE2-E172-4171-8755-3D586BF5D342}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9CFCF93-10BE-4C39-95F0-7FBCE1F62125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9CFCF93-10BE-4C39-95F0-7FBCE1F62125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9CFCF93-10BE-4C39-95F0-7FBCE1F62125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9CFCF93-10BE-4C39-95F0-7FBCE1F62125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58202E7A-20F8-496D-BAAA-C195FBA6905F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58202E7A-20F8-496D-BAAA-C195FBA6905F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58202E7A-20F8-496D-BAAA-C195FBA6905F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58202E7A-20F8-496D-BAAA-C195FBA6905F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2264DE8-AA9C-4FF4-875D-A73818A25623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2264DE8-AA9C-4FF4-875D-A73818A25623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2264DE8-AA9C-4FF4-875D-A73818A25623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2264DE8-AA9C-4FF4-875D-A73818A25623}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18E8CC80-C707-4ED1-B5E0-51829831BD8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E8CC80-C707-4ED1-B5E0-51829831BD8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18E8CC80-C707-4ED1-B5E0-51829831BD8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18E8CC80-C707-4ED1-B5E0-51829831BD8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{392588CF-36F5-4BE1-9FD0-354A58DB7D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{392588CF-36F5-4BE1-9FD0-354A58DB7D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{392588CF-36F5-4BE1-9FD0-354A58DB7D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{392588CF-36F5-4BE1-9FD0-354A58DB7D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7296461E-5520-479F-949C-E1CE5DF38082}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7296461E-5520-479F-949C-E1CE5DF38082}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7296461E-5520-479F-949C-E1CE5DF38082}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7296461E-5520-479F-949C-E1CE5DF38082}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF59061C-B1FF-4A26-A093-139E4A38DC20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF59061C-B1FF-4A26-A093-139E4A38DC20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF59061C-B1FF-4A26-A093-139E4A38DC20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF59061C-B1FF-4A26-A093-139E4A38DC20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF366790-E786-409B-8FC1-F1AB95BACCE0} = {CA49944D-88D9-4274-8364-68652A239982}
+		{807F3BE2-E172-4171-8755-3D586BF5D342} = {8A0DB0A0-8FF2-4963-8DB3-EB3B6CD759F7}
+		{E9CFCF93-10BE-4C39-95F0-7FBCE1F62125} = {99B5D35A-CD02-4C2F-92DC-1367AD80DCDD}
+		{58202E7A-20F8-496D-BAAA-C195FBA6905F} = {CA49944D-88D9-4274-8364-68652A239982}
+		{F2264DE8-AA9C-4FF4-875D-A73818A25623} = {17DA61CC-BF04-4B9A-8746-48DB7C940386}
+		{18E8CC80-C707-4ED1-B5E0-51829831BD8C} = {8A0DB0A0-8FF2-4963-8DB3-EB3B6CD759F7}
+		{392588CF-36F5-4BE1-9FD0-354A58DB7D73} = {17DA61CC-BF04-4B9A-8746-48DB7C940386}
+		{7296461E-5520-479F-949C-E1CE5DF38082} = {99B5D35A-CD02-4C2F-92DC-1367AD80DCDD}
+		{BF59061C-B1FF-4A26-A093-139E4A38DC20} = {17DA61CC-BF04-4B9A-8746-48DB7C940386}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D35164E8-DB7D-47D9-B789-7A2E320B8AEA}
+	EndGlobalSection
+EndGlobal

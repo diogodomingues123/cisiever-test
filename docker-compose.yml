@@ -1,0 +1,34 @@
+﻿services:
+  reports-api:
+    image: weareplanet.spv.reports.web
+    container_name: reports-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - db.network
+    ports:
+      - 8080:8080
+    depends_on:
+      - reports-db
+  
+  reports-db:
+    hostname: reports-db
+    container_name: reports-db
+    image: mongo:5.0.20
+    volumes:
+      - mongo-reports-db:/data/db
+      - ./db/rs-init.sh:/scripts/rs-init.sh
+    networks:
+      - db.network
+    ports:
+      - 27017:27017
+    restart: always
+    command: mongod --bind_ip_all --replSet reports-rs --port 27017
+
+volumes:
+  mongo-reports-db:
+
+networks:
+  db.network:
+    driver: bridge

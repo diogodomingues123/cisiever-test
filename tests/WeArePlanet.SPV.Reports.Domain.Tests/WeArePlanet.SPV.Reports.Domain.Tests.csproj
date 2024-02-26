@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\WeArePlanet.SPV.Reports.Domain\WeArePlanet.SPV.Reports.Domain.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.Validators.UnitTestExtension" Version="1.11.0.2"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\ReportSchedules\Commands\Events\"/>
+  </ItemGroup>
+</Project>

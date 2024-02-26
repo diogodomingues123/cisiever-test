@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\WeArePlanet.SPV.Reports.Persistence\WeArePlanet.SPV.Reports.Persistence.csproj"/>
+  </ItemGroup>
+
+</Project>

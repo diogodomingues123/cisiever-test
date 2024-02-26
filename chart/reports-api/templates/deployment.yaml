@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "reports-api.fullname" . }}
+  labels:
+    {{- include "reports-api.labels" . | nindent 4 }}
+    {{- if .Values.datadogConfig.enabled }}
+    tags.datadoghq.com/env: {{ .Values.datadogConfig.labels.environment | quote }}
+    tags.datadoghq.com/service: {{ include "reports-api.fullname" . | quote}}
+    tags.datadoghq.com/version: {{ .Chart.AppVersion | quote }}
+    tags.datadoghq.com/level1: {{ .Values.datadogConfig.labels.level1 | default "NOC" | quote }}
+    tags.datadoghq.com/level2: {{ .Values.datadogConfig.labels.level2 | default "SysOps"  | quote }}
+    tags.datadoghq.com/level3: {{ .Values.datadogConfig.labels.level3 | default "Development Team"  | quote }}
+    tags.datadoghq.com/businessUnit: {{ .Values.datadogConfig.labels.businessUnit | default "TBC"  | quote }}
+    {{- end }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "reports-api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- if .Values.datadogConfig.enabled }}
+        admission.datadoghq.com/dotnet-lib.version: {{ .Values.datadogConfig.dotnetLibVersion | quote }}
+        ad.datadoghq.com/reports-api.logs: '[{"source": "csharp","service": {{ include "reports-api.fullname" . | quote }}}]'
+        {{- end }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "reports-api.selectorLabels" . | nindent 8 }}
+        {{- if .Values.datadogConfig.enabled }}
+        tags.datadoghq.com/env: {{ .Values.datadogConfig.labels.environment | quote }}
+        tags.datadoghq.com/service: {{ include "reports-api.fullname" . | quote }}
+        tags.datadoghq.com/version: {{ .Chart.AppVersion | quote }}
+        tags.datadoghq.com/level1: {{ .Values.datadogConfig.labels.level1 | default "NOC" | quote }}
+        tags.datadoghq.com/level2: {{ .Values.datadogConfig.labels.level2 | default "SysOps"  | quote }}
+        tags.datadoghq.com/level3: {{ .Values.datadogConfig.labels.level3 | default "Development Team"  | quote }}
+        tags.datadoghq.com/businessUnit: {{ .Values.datadogConfig.labels.businessUnit | default "TBC"  | quote }}
+        admission.datadoghq.com/enabled: {{ .Values.datadogConfig.labels.enableAdmissionController | quote }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "reports-api.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.containerPort }}
+              protocol: TCP
+          {{- with .Values.app.envFrom }}
+          envFrom:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.app.env }}
+          env:
+          {{- range $k, $v := .Values.app.env }}
+            - name: {{ $v.name }}
+              value: {{ $v.value | quote }}
+          {{- end }}
+            {{- if .Values.datadogConfig.enabled }}
+            - name: DD_ENV
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/env']
+            - name: DD_VERSION
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/version']
+            {{- end }}
+          {{- end }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          startupProbe:
+            {{- toYaml .Values.startupProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.1.1"/>
+    <PackageReference Include="MongoDB.Driver" Version="2.21.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WeArePlanet.SPV.Reports.Domain\WeArePlanet.SPV.Reports.Domain.csproj"/>
+  </ItemGroup>
+
+
+</Project>

@@ -1,0 +1,119 @@
+serviceAccount:
+  name: reports-api-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::748861314284:role/Reports-API-IRSA
+
+ingress:
+  enabled: true
+  className: alb
+  annotations:
+    alb.ingress.kubernetes.io/load-balancer-name: spv-ingress-private
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/group.name: spv-ingress-private
+    alb.ingress.kubernetes.io/group.order: '20'
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/success-codes: '200'
+    alb.ingress.kubernetes.io/healthcheck-path: /health/liveness
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:748861314284:certificate/098b353e-1eae-4225-8a6c-75e6d84d1733
+  defaultBackend: true
+  hosts:
+    - host: reports.dev.weareplanet.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+Publicingress:
+  enabled: false
+
+resources:
+  requests:
+    memory: 768Mi
+    cpu: 100m
+
+livenessProbe:
+  httpGet:
+    path: /health/liveness
+    port: 8080
+readinessProbe:
+  httpGet:
+    path: /health/readiness
+    port: 8080
+startupProbe:
+  httpGet:
+    path: /health/readiness
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+podDisruptionBudget:
+  enabled: false
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 80
+
+service:
+  containerPort: 8080
+
+secretStore:
+  enabled: true
+  region: eu-west-1
+  externalSecrets:
+    - name: docdb-conn-string
+      targetSecret: docdb-conn-string
+      template:
+        engineVersion: v2
+        data:
+          REPORTSAPI_ConnectionStrings__Mongo: 'mongodb://{{ .username }}:{{ .password }}@{{ .endpoint }}:{{ .port }}/?tls=true&replicaSet=rs0&readpreference=secondaryPreferred&retryWrites=false'
+      dataFrom:
+        - extract:
+            key: docdb-reports-api-cred
+    - name: okta-creds
+      targetSecret: okta-creds
+      template:
+        engineVersion: v2
+        data:
+          REPORTSAPI_Auth__Okta__ClientId: '{{ .client_id }}'
+          REPORTSAPI_Auth__Okta__ClientSecret: '{{ .client_secret }}'
+      dataFrom:
+        - extract:
+            key: spv_reportsapi_okta_auth_creds
+
+app:
+  envFrom:
+    - secretRef:
+        name: docdb-conn-string
+    - secretRef:
+        name: okta-creds
+  env:
+    - name: AWS_REGION
+      value: eu-west-1
+    - name: DD_LOGS_INJECTION
+      value: "true"
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Development
+
+podAnnotations: {}
+
+datadogConfig:
+  enabled: true
+  dotnetLibVersion: v2.38.0
+  labels:
+    environment: spv-dev
+    level1: TBC
+    level2: TBC
+    level3: TBC
+    businessUnit: Payments
+    enableAdmissionController: true

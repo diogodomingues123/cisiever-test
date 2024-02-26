@@ -1,0 +1,538 @@
+---
+openapi: 3.0.2
+info:
+  title: Report Service API
+  description: Reporting API
+  version: v1
+  contact:
+    name: Planet Unified API Team
+    url: https://weareplanet.dev
+    email: support.api@weareplanet.com
+servers:
+  - url: https://api.sandbox.weareplanet.com
+    description: Report API Sandbox endpoint
+security:
+  - jwt: [ ]
+paths:
+  "/api/v1/report-schedules":
+    get:
+      tags:
+        - Report Schedules
+      summary: Get all Report Schedules
+      operationId: getReportSchedules
+      parameters:
+        - $ref: "#/components/parameters/PageNumber"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        '200':
+          description: Fetched report schedules successfully.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ReportSchedulePageContract"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/Unauthorized"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '503':
+          $ref: "#/components/responses/ServiceUnavailable"
+
+    post:
+      tags:
+        - Report Schedules
+      summary: Create a Report Schedules
+      operationId: createReportSchedule
+      requestBody:
+        required: true
+        description: Create Report Schedule Request
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateReportScheduleRequestContract"
+      responses:
+        '201':
+          description: Report schedule created successfully.
+          headers:
+            Location:
+              $ref: "#/components/headers/Location"
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ReportScheduleContract"
+        '401':
+          $ref: "#/components/responses/Unauthorized"
+        '422':
+          $ref: "#/components/responses/BadRequest"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '503':
+          $ref: "#/components/responses/ServiceUnavailable"
+  "/api/v1/report-schedules/{reportScheduleId}":
+    get:
+      tags:
+        - Report Schedules
+      summary: Get a Report Schedule
+      operationId: getReportSchedule
+      parameters:
+        - $ref: "#/components/parameters/ReportScheduleId"
+      responses:
+        '200':
+          description: Report fetched successfully.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ReportScheduleContract"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/Unauthorized"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '503':
+          $ref: "#/components/responses/ServiceUnavailable"
+    patch:
+      tags:
+        - Report Schedules
+      summary: Patch a Report Schedule
+      operationId: patchReportSchedule
+      parameters:
+        - $ref: "#/components/parameters/ReportScheduleId"
+      requestBody:
+        required: true
+        description: Patch Report Request
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PatchReportScheduleRequest"
+      responses:
+        '200':
+          description: Report schedule patched successfully.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ReportScheduleContract"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/Unauthorized"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '503':
+          $ref: "#/components/responses/ServiceUnavailable"
+    delete:
+      tags:
+        - Report Schedules
+      summary: Archive a Report Schedule
+      operationId: archiveReportSchedule
+      parameters:
+        - $ref: "#/components/parameters/ReportScheduleId"
+      responses:
+        '204':
+          description: Report archived successfully.
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/Unauthorized"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '503':
+          $ref: "#/components/responses/ServiceUnavailable"
+  "/api/v1/report-schedules/{reportScheduleId}/executions":
+    get:
+      tags:
+        - Report Executions
+      summary: Get all executions for a report
+      operationId: getReportExecutions
+      parameters:
+        - $ref: "#/components/parameters/ReportScheduleId"
+      responses:
+        '200':
+          description: Fetched reports successfully.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GetReportExecutionsResponseContract"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/Unauthorized"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '503':
+          $ref: "#/components/responses/ServiceUnavailable"
+  "/api/v1/report-schedules/{reportScheduleId}/executions/{reportExecutionId}":
+    get:
+      tags:
+        - Report Executions
+      summary: Get execution for a report schedule
+      operationId: getReportExecution
+      parameters:
+        - $ref: "#/components/parameters/ReportScheduleId"
+        - $ref: "#/components/parameters/ReportExecutionId"
+      responses:
+        '200':
+          description: Fetched report execution successfully.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ReportExecutionContract"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/Unauthorized"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '503':
+          $ref: "#/components/responses/ServiceUnavailable"
+  "/api/v1/report-schedules/{reportScheduleId}/executions/{reportExecutionId}/artifacts":
+    get:
+      tags:
+        - Report Executions
+      summary: Get report execution artifacts
+      operationId: getReportExecutionArtifacts
+      parameters:
+        - $ref: "#/components/parameters/ReportScheduleId"
+        - $ref: "#/components/parameters/ReportExecutionId"
+      responses:
+        '200':
+          description: Fetched report execution artifacts successfully.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ArtifactContract"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '401':
+          $ref: "#/components/responses/Unauthorized"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+        '503':
+          $ref: "#/components/responses/ServiceUnavailable"
+
+components:
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: This API uses JWTs.
+  
+  headers:
+    Location:
+      description: A URL where the caller can find the updated resource.
+      style: simple
+      schema:
+        type: string
+        format: uri
+  parameters:
+    ReportScheduleId:
+      required: true
+      in: path
+      name: reportScheduleId
+      schema:
+        type: string
+        format: uuid
+      description: The identifier of the report schedule.
+    ReportExecutionId:
+      required: true
+      in: path
+      name: reportExecutionId
+      schema:
+        type: string
+        format: uuid
+      description: The identifier of the report execution.
+    PageNumber:
+      required: false
+      in: query
+      name: pageNumber
+      description: The page number to query for.
+      schema:
+        type: integer
+    PageSize:
+      required: false
+      in: query
+      name: pageSize
+      description: The page size. Default is 25.
+      schema:
+        type: integer
+  responses:
+    BadRequest:
+      description: The request is invalid. The specific reason is returned in the response body.
+      content:
+        application/problem+json:
+          schema:
+            anyOf:
+              - "$ref": "#/components/schemas/ProblemDetailsContract"
+    Unauthorized:
+      description: The requester is not authenticated.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetailsContract'
+      headers:
+        WWW-Authenticate:
+          schema:
+            type: string
+    Forbidden:
+      description: The requester is forbidden from accessing the resource.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetailsContract'
+    InternalServerError:
+      description: The request is valid but the server could not process it. The specific reason is returned in the response body.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetailsContract'
+    ServiceUnavailable:
+      description: The service requested is unavailable at the moment.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetailsContract'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetailsContract'
+    Default:
+      description: A problem has occurred when processing the request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetailsContract'
+  schemas:
+    ProblemDetailsContract:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: integer
+          description: HTTP error code of the operation.
+        title:
+          type: string
+          description: A brief error title.
+        type:
+          type: string
+          description: A URI in the format https://httpstatuses.io/{status} linking to the specific status code docs
+        detail:
+          type: string
+          description: A detailed description about the error.
+        traceId:
+          type: string
+          description: Used for technical reasons only.
+        errors:
+          type: object
+          description: An optional list of key-array values containing a list of specific errors that caused the problem. Typically in the form of PropertyName -> [Message1, Message2].
+          example:
+            Field1:
+              - Field1 may not be empty.
+              - Field1 should be in the future.
+            Field2:
+              - Field2 must be a number.
+    ReportSchedulePageContract:
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - properties:
+            entries:
+              type: array
+              items:
+                $ref: "#/components/schemas/ReportScheduleContract"
+    Page:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+    GetReportExecutionsResponseContract:
+      type: array
+      additionalProperties: false
+      items:
+        $ref: "#/components/schemas/ReportExecutionContract"
+    CreateReportScheduleRequestContract:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+        - templateId
+        - executionPlan
+      properties:
+        name:
+          type: string
+          description: The name for this report schedule.
+        templateId:
+          type: string
+          format: uuid
+          description: The template identifier to be used for the generation of the report.
+        executionPlan:
+          $ref: "#/components/schemas/ExecutionPlanContract"
+        input:
+          type: object
+          additionalProperties: true
+          description: A list of input parameters that can be sent to the server according to the selected template.
+        webhooks:
+          $ref: "#/components/schemas/WebhooksContract"
+    ReportScheduleContract:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The identifier of the report schedule.
+        name:
+          type: string
+          description: The name for this report schedule.
+        templateId:
+          type: string
+          format: uuid
+          description: The template identifier to be used for the generation of the report.
+        state:
+          type: string
+          enum:
+            - Active
+            - Inactive
+            - Executed
+          description: The report schedule state.
+        executionPlan:
+          $ref: "#/components/schemas/ExecutionPlanContract"
+        input:
+          type: object
+          description: A list of input parameters that can be sent to the server according to the selected template.
+          additionalProperties: true
+        webhooks:
+          $ref: "#/components/schemas/WebhooksContract"
+        createdAt:
+          type: string
+          format: date-time
+          description: Represents the date when this resource was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Represents the date when this resource has last been updated.
+    ReportExecutionContract:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The identifier of the execution.
+        status:
+          type: string
+          enum:
+            - Pending
+            - Running
+            - Finished
+            - Failed
+          description: A property representing the execution status.
+        artifacts:
+          type: array
+          description: A list of artifacts created by this execution.
+          items:
+            $ref: "#/components/schemas/ArtifactContract"
+    
+    ArtifactContract:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The identifier of the artifact.
+        url:
+          type: string
+          format: uri
+          description: A URI that can be used to access the artifact.
+    WebhooksContract:
+      type: object
+      additionalProperties: false
+      description: Represents a collection of webhooks that the server will attempt to call in multiple situations.
+      properties:
+        onSuccess:
+          type: string
+          format: uri
+          description: A valid webhook URI to call when the report is successfully created.
+        onError:
+          type: string
+          format: uri
+          description: A valid webhook URI to call when the report failed to be created.
+    ExecutionPlanTypeContract:
+      type: string
+      enum:
+        - OneOff
+        - Recurring
+      description: The execution plan type.
+    ExecutionPlanContract:
+      type: object
+      additionalProperties: false
+      description: Represents the execution plan for this report schedule.
+      required:
+        - type
+      properties:
+        id:
+          type: string
+          description: The identifier of the execution plan. This is returned by the server and should not be provided.
+          nullable: true
+        type:
+          $ref: "#/components/schemas/ExecutionPlanTypeContract"
+        nextExecutionAt:
+          type: string
+          format: date-time
+          description: The planned date for the next report execution. This date is always in UTC.
+          nullable: true
+      discriminator:
+        propertyName: type
+        mapping:
+          OneOff: "#/components/schemas/OneOffExecutionPlanContract"
+          Recurring: "#/components/schemas/RecurringExecutionPlanContract"
+    OneOffExecutionPlanContract:
+      allOf:
+        - $ref: "#/components/schemas/ExecutionPlanContract"
+        - type: object
+          additionalProperties: false
+          description: A report execution plan that only executes once.
+          properties:
+            date:
+              type: string
+              format: date-time
+              description: |
+                The date to schedule this report to, or empty if scheduling it to run as soon as possible.
+              nullable: true
+            timeZone:
+              type: string
+              description: Optional value for the time zone scheduling this report from. The timezone must be in [IANA format](https://www.iana.org/time-zones) (i.e., TZ ID). A missing timezone value will assume that the date is in UTC.
+              nullable: true
+              example: Europe/Lisbon
+    RecurringExecutionPlanContract:
+      allOf:
+        - $ref: "#/components/schemas/ExecutionPlanContract"
+        - type: object
+          additionalProperties: false
+          description: A report execution plan that executes periodically according to the frequency value specified.
+          required:
+            - frequency
+          properties:
+            frequency:
+              type: string
+              description: A CRON expression that tells the server when to run this report.
+            timeZone:
+              type: string
+              description: Optional value for the time zone scheduling this report from. The timezone must be in [IANA format](https://www.iana.org/time-zones) (i.e., TZ ID). A missing timezone value will assume that the frequency is in UTC.
+              nullable: true
+              example: Europe/Lisbon
+    PatchReportScheduleRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        active:
+          type: boolean
+          description: Toggles whether the report schedule is active or not. A `true` value activates it and disables it if `false`. If provided, must have a valid boolean value set.
+            

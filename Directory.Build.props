@@ -1,0 +1,20 @@
+﻿<Project>
+  <PropertyGroup Label="General Project Settings">
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>$(BaseNamespace)</RootNamespace>
+    <BaseNamespace>WeArePlanet.SPV.Reports</BaseNamespace>
+    <ProjectRoot>$(MSBuildThisFileDirectory)</ProjectRoot>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package Versions">
+    <MicrosoftPackagesVersion>7.0.0</MicrosoftPackagesVersion>
+    <AspNetPackagesVersion>7.0.10</AspNetPackagesVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LanguageExt.Core" Version="4.4.4"/>
+  </ItemGroup>
+
+</Project>

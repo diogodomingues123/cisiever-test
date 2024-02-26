@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Remove="WeArePlanet.SPV.Reports.Common.Tests.csproj"/>
+    <ProjectReference Include="$(ProjectRoot)/tests/WeArePlanet.SPV.Reports.TestFactories/WeArePlanet.SPV.Reports.TestFactories.csproj"/>
+  </ItemGroup>
+</Project>
