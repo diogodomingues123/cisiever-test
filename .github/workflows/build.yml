@@ -31,7 +31,7 @@ jobs:
             ghcr.io/weareplanet/cisiever:${{ github.sha }}
       - name: Update Image Tag Values
         run: |
-              chart_dir="chart"
+              chart_dir="chart/reports-api"
               new_image_tag=${{ github.sha }}
       
               # Update the values.yaml file with the new image tag
