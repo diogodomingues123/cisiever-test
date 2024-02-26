@@ -5,6 +5,9 @@ jobs:
   build:
     name: Build and Push to GHCR
     runs-on: azure-non-prod
+    permissions:
+      packages: write
+      contents: read
 
     steps:
       - name: Checkout
