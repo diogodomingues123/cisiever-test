@@ -27,8 +27,8 @@ jobs:
           #file: Path to the Dockerfile. (default {context}/Dockerfile)
           push: true
           tags: |
-            ghcr.io/weareplanet/planet-taxfree-website:latest
-            ghcr.io/weareplanet/planet-taxfree-website:${{ github.sha }}
+            ghcr.io/weareplanet/cisiever-test:latest
+            ghcr.io/weareplanet/cisiever-test:${{ github.sha }}
       - name: Update Image Tag Values
         run: |
               chart_dir="chart"
