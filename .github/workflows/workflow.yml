@@ -1,4 +1,4 @@
-name: Reports API
+name: Build & Deploy
 
 on:
   push:
