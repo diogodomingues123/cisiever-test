@@ -22,27 +22,14 @@ jobs:
           registry: ghcr.io/weareplanet
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
+      - name: Build an image from Dockerfile
+        run: docker build -t ghcr.io/weareplanet/cisiever:${{ github.sha }} .
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
         with:
-          context: .
-          #file: Path to the Dockerfile. (default {context}/Dockerfile)
-          push: true
-          tags: |
-            ghcr.io/weareplanet/cisiever:latest
-            ghcr.io/weareplanet/cisiever:${{ github.sha }}
-      - name: Update Image Tag Values
-        run: |
-              chart_dir="chart/reports-api"
-              new_image_tag=${{ github.sha }}
-      
-              # Update the values.yaml file with the new image tag
-              sed -i "s/^  tag: .*/  tag: $new_image_tag/" "$chart_dir/values.yaml"
-      - name: Commit the changes made
-        run: | 
-                git config --global user.name 'Test'
-                git config --global user.email 'Test@weareplanet.com'
-                git remote set-url --push origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com:$GITHUB_REPO
-                git commit -am "updating image tag"
-                git push     
+          image-ref: 'ghcr.io/weareplanet/cisiever:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
