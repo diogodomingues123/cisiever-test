@@ -37,9 +37,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACTIONS_RUNTIME_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Debug
+        run: cat trivy.txt
       - name: Publish Trivy Output to Summary
         run: |
-      -  run: |
           while IFS= read -r line; do
               if [[ $line == "┌"* ]]; then echo '```' >> $GITHUB_STEP_SUMMARY; fi
               echo "$line" >> $GITHUB_STEP_SUMMARY
