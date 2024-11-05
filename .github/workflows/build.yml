@@ -30,7 +30,7 @@ jobs:
           image-ref: 'ghcr.io/weareplanet/cisiever:${{ github.sha }}'
           exit-code: '1'
           ignore-unfixed: true
-          format: 'table'
+          format: 'github'
           output: 'trivy.txt'
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
