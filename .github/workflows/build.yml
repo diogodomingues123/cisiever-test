@@ -31,7 +31,7 @@ jobs:
           exit-code: '1'
           ignore-unfixed: true
           format: 'table'
-          output: 'trivy-results.txt'
+          output: 'trivy.txt'
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
         env:
