@@ -30,14 +30,23 @@ jobs:
           image-ref: 'ghcr.io/weareplanet/cisiever:${{ github.sha }}'
           exit-code: '1'
           ignore-unfixed: true
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+          format: 'table'
+          output: 'trivy-results.txt'
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACTIONS_RUNTIME_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
+      - name: Publish Trivy Output to Summary
+        run: |
+          if [[ -s trivy.txt ]]; then
+            {
+              echo "### Security Output"
+              echo "<details><summary>Click to expand</summary>"
+              echo ""
+              echo '```terraform'
+              cat trivy.txt
+              echo '```'
+              echo "</details>"
+            } >> $GITHUB_STEP_SUMMARY
+          fi
