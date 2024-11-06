@@ -28,16 +28,19 @@ jobs:
         uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: 'ghcr.io/weareplanet/cisiever:${{ github.sha }}'
-          exit-code: '0'
+          exit-code: '1'
           ignore-unfixed: true
           format: 'table'
           output: 'trivy.txt'
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+          github-pat: ${{ secrets.GITHUB_TOKEN}}
+          scanners: 'vuln,secret,misconfig,license'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACTIONS_RUNTIME_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TRIVY_DISABLE_VEX_NOTICE: true
+        continue-on-error: true
       - name: Debug
         run: cat trivy.txt
       - name: Publish Trivy Output to Summary
