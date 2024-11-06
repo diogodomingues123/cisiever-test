@@ -30,13 +30,14 @@ jobs:
           image-ref: 'ghcr.io/weareplanet/cisiever:${{ github.sha }}'
           exit-code: '0'
           ignore-unfixed: true
-          format: 'github'
+          format: 'table'
           output: 'trivy.txt'
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACTIONS_RUNTIME_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TRIVY_DISABLE_VEX_NOTICE: true
       - name: Debug
         run: cat trivy.txt
       - name: Publish Trivy Output to Summary
