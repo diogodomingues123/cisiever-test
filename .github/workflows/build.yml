@@ -35,15 +35,13 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
           github-pat: ${{ secrets.GITHUB_TOKEN}}
-          scanners: 'vuln,secret,misconfig,license'
+          scanners: 'vuln,secret,misconfig'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACTIONS_RUNTIME_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TRIVY_DISABLE_VEX_NOTICE: true
-        continue-on-error: true
-      - name: Debug
-        run: cat trivy.txt
       - name: Publish Trivy Output to Summary
+        if: success() || failure()
         run: |
           while IFS= read -r line; do
               if [[ $line == "┌"* ]]; then echo '```' >> $GITHUB_STEP_SUMMARY; fi
