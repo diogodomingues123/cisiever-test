@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="$(AspNetPackagesVersion)"/>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="$(MicrosoftPackagesVersion)"/>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5"/>
-    <PackageReference Include="Hangfire.Mongo" Version="1.10.4"/>
+    <PackageReference Include="Hangfire.Mongo" Version="1.9.11"/>
     <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.5.1"/>
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0"/>
     <PackageReference Include="Swashbuckle.AspNetCore.ReDoc" Version="6.5.0"/>
