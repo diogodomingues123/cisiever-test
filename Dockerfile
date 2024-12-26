@@ -3,7 +3,9 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 
 RUN apt update \
-    && apt install -y --no-install-recommends wget ca-certificates
+    && apt install -y --no-install-recommends wget ca-certificates \
+    && apt install -y openssl \
+    && apt install -y logsave
 
 RUN wget -O /usr/local/share/ca-certificates/aws-global-bundle.crt https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem \
     && update-ca-certificates
