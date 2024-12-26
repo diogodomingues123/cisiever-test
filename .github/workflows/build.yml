@@ -49,7 +49,7 @@ jobs:
         if: success() || failure()
         with:
             scan-type: 'fs'
-            format: 'github'
+            format: 'json'
             output: 'dependency-results.sbom.json'
             image-ref: '.'
             github-pat: ${{ secrets.GITHUB_TOKEN}}
