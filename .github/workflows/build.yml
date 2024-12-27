@@ -49,7 +49,7 @@ jobs:
         if: success() || failure()
         with:
             scan-type: 'fs'
-            format: 'json'
+            format: 'github'
             output: 'dependency-results.sbom.json'
             image-ref: '.'
             github-pat: ${{ secrets.GITHUB_TOKEN}}
@@ -91,7 +91,7 @@ jobs:
           close_old_findings: true
           auto_create_context: true
           product_name: "cisiever-test2"
-          engagement_name: "reimport-test"
+          engagement_name: "sbom"
           deduplication_on_engagement: true
       - name: Show response
         if: success() || failure()
