@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cisiever-test
+  annotations:
+    github.com/project-slug: weareplanet/cisiever-test
+spec:
+  type: other
+  lifecycle: unknown
+  owner: backstage_operators_nonprod
