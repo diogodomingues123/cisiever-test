@@ -5,6 +5,6 @@ metadata:
   annotations:
     github.com/project-slug: weareplanet/cisiever-test
 spec:
-  type: service
+  type: service2
   lifecycle: production
   owner: backstage_operators_nonprod
