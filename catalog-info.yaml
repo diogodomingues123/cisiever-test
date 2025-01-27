@@ -5,6 +5,6 @@ metadata:
   annotations:
     github.com/project-slug: weareplanet/cisiever-test
 spec:
-  type: website2
+  type: website
   lifecycle: production
   owner: backstage_operators_nonprod
