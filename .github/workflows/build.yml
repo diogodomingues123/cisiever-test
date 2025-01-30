@@ -1,7 +1,7 @@
 on:
-  #pull_request: 
-    #branches:
-      #- main
+  pull_request: 
+    branches:
+      - main
   workflow_call:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -20,30 +20,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io/weareplanet
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build an image from Dockerfile
         run: docker build -t ghcr.io/weareplanet/cisiever:${{ github.sha }} .
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.29.0
-        with:
-          image-ref: 'ghcr.io/weareplanet/cisiever:${{ github.sha }}'
-          exit-code: '1'
-          ignore-unfixed: true
-          format: 'sarif'
-          output: 'trivy.sarif'
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
-          github-pat: ${{ secrets.GITHUB_TOKEN}}
-          scanners: 'vuln,secret,misconfig'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ACTIONS_RUNTIME_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TRIVY_DISABLE_VEX_NOTICE: true
       - name: Run Trivy SBOM scanner
         uses: aquasecurity/trivy-action@0.29.0
         if: success() || failure()
@@ -58,49 +36,4 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             ACTIONS_RUNTIME_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             TRIVY_DISABLE_VEX_NOTICE: true
-      - name: Upload trivy report as a Github artifact
-        uses: actions/upload-artifact@v4
-        if: success() || failure()
-        with:
-          name: trivy-sbom-report
-          path: '${{ github.workspace }}/dependency-results.sbom.json'
-          retention-days: 20 # 90 is the default
-      - name: import scan results into defectdojo
-        uses: weareplanet/import-scan@main
-        id: import-scan
-        if: success() || failure()
-        with:
-          token: ${{ secrets.DEFECTDOJO_APIKEY }}
-          defectdojo_url: https://defectdojo.test.weareplanet.com
-          file: trivy.sarif
-          scan_type: SARIF
-          close_old_findings: true
-          auto_create_context: true
-          product_name: "cisiever-test2"
-          engagement_name: "reimport-test"
-          deduplication_on_engagement: true
-      - name: import sbom results into defectdojo
-        uses: weareplanet/import-scan@main
-        id: import-scan2
-        if: success() || failure()
-        with:
-          token: ${{ secrets.DEFECTDOJO_APIKEY }}
-          defectdojo_url: https://defectdojo.test.weareplanet.com
-          file: dependency-results.sbom.json
-          scan_type: Trivy Scan
-          close_old_findings: true
-          auto_create_context: true
-          product_name: "cisiever-test2"
-          engagement_name: "sbom"
-          deduplication_on_engagement: true
-      - name: Show response
-        if: success() || failure()
-        run: |
-          set -e
-          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
-      - name: Show response
-        if: success() || failure()
-        run: |
-          set -e
-          printf '%s\n' '${{ steps.import-scan2.outputs.response }}'
   
