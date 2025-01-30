@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Versions">
-    <MicrosoftPackagesVersion>7.0.0</MicrosoftPackagesVersion>
+    <MicrosoftPackagesVersion>7.0.20</MicrosoftPackagesVersion>
     <AspNetPackagesVersion>7.0.10</AspNetPackagesVersion>
   </PropertyGroup>
 
