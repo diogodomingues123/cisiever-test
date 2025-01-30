@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.7.1"/>
-    <PackageReference Include="Cronos" Version="0.7.1"/>
+    <PackageReference Include="Cronos" Version="0.9.0"/>
     <PackageReference Include="MediatR" Version="12.1.1"/>
   </ItemGroup>
 
