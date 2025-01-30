@@ -1,7 +1,7 @@
 on:
-  pull_request: 
-    branches:
-      - main
+  #pull_request: 
+    #branches:
+      #- main
   workflow_call:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
