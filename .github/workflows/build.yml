@@ -25,7 +25,7 @@ jobs:
       - name: Build an image from Dockerfile
         run: docker build -t ghcr.io/weareplanet/cisiever:${{ github.sha }} .
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+        uses: aquasecurity/trivy-action@18f2510ee396bbf400402947b394f2dd8c87dbb0
         with:
           image-ref: 'ghcr.io/weareplanet/cisiever:${{ github.sha }}'
           format: 'template'
