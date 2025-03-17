@@ -25,7 +25,7 @@ jobs:
       - name: Build an image from Dockerfile
         run: docker build -t ghcr.io/weareplanet/cisiever:${{ github.sha }} .
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+        uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5
         with:
           image-ref: 'ghcr.io/weareplanet/cisiever:${{ github.sha }}'
           format: 'template'
@@ -37,7 +37,7 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
       - name: Run Trivy SBOM scanner
-        uses: aquasecurity/trivy-action@0.29.0
+        uses: aquasecurity/trivy-action@0.30.0
         if: success() || failure()
         with:
             scan-type: 'fs'
